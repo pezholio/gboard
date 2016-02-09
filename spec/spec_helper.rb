@@ -4,6 +4,9 @@ Coveralls.wear!
 require 'gboard'
 require 'webmock/rspec'
 require 'support/vcr_setup'
+require 'timecop'
+
+ENV['RECIPIENT_EMAILS'] = "foo@example.com,bar@example.com"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
