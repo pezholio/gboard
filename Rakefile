@@ -11,10 +11,11 @@ namespace :gboard do
   task :metrics do
     Gboard::Store.perform
   end
-end
-
-namespace :gboard do
   task :alerts do
+    Gboard::Alerts.perform
+  end
+  task :all do
+    Gboard::Store.perform
     Gboard::Alerts.perform
   end
 end
