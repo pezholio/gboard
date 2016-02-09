@@ -13,4 +13,10 @@ namespace :gboard do
   end
 end
 
+namespace :gboard do
+  task :alerts do
+    Gboard::Alerts.perform
+  end
+end
+
 task :default => [:spec, "coveralls:push"]
