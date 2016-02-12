@@ -33,31 +33,33 @@ module Gboard
 
     def events
       agent.page.css('.divMainContainer .normal').map do |e|
-        details = e.css('.divDetails dd')
         type = get_type e.css('.spanStudentInfoHeader').text
-        points = get_points details[0].text
-        category = get_category details[0].text
+        if !type.nil?
+          details = e.css('.divDetails dd')
+          points = get_points details[0].text
+          category = get_category details[0].text
 
-        {
-          type: type,
-          category: category,
-          points: points,
-          date: DateTime.parse(details[1].text),
-          comments: (details[7] || details[4]).text
-        }
-      end
+          {
+            type: type,
+            category: category,
+            points: points,
+            date: DateTime.parse(details[1].text),
+            comments: (details[7] || details[4]).text
+          }
+        end
+      end.select { |e| !e.nil? }
     end
 
     def get_type(text)
       if text =~ /Behaviour/
         'Behaviour'
-      else
+      elsif text =~ /Achievement/
         'Achievement'
       end
     end
 
     def get_points(text)
-      text.match(/.+\(([0-9]+)/)[1]
+      text.match(/.+\(([0-9]+)/)[1] rescue nil
     end
 
     def get_category(text)
